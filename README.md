@@ -1,1 +1,1 @@
-# MyWol_GoodCodeBadCode
+# 良いコード悪いコードの学習用リポジトリ
