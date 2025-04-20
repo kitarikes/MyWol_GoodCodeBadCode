@@ -93,7 +93,7 @@ public class GameDemo {
         // ① キャラクターを HP150 で生成
         HitPoint hp = new HitPoint(150);
         System.out.println("[Start]  HP = " + hp.value);
-
+        
         // ② 敵から 35 ダメージを受ける
         hp = hp.damage(35);
         System.out.println("[Damage] HP = " + hp.value);

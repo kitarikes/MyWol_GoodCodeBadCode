@@ -1,0 +1,64 @@
+# カプセル化
+- クラスを作成する時は、そのクラスのみで動作するように設計する。
+- 他の前準備をしなければ使えないようなクラスを設計しない！
+- データクラス自身で属するデータを守る仕組みを持つ。
+
+## 【値の渡し間違いを防ぐ】引数に型を指定する（intやString）
+```java
+class Money {
+    // 省略
+    Money add(final Money other) {
+        final int added = amount + other.amount;
+        return new Money(added, currency);
+    }
+}
+```
+
+## クラス構築におけるチェックリスト
+
+ドメインモデルの完全性 =「値が正確な状態を維持していること」をクラス構築では目指す！
+
+- ① 必要なロジックをデータクラスに集約する
+    - 修正漏れを防ぐ
+    - 可読性向上
+- ② コンストラクタでインスタンス変数の値を確定させる
+    - 不正値が入った場合は例外を出す
+- ③ finalで変数を不変にする
+    - 不正値の混入を防ぐ
+- ④ メソッドの引数に型を指定する
+    - 純粋なint型の入力等を防ぐ
+
+
+```java
+import java.util.Currency;
+
+// ① 必要なロジックをデータクラスに集約する
+class Money {
+    // ③ finalで変数を不変にする
+    final int amount;
+    final Currency currency;
+
+    Money(final int amount, final Currency currency) {
+        // ② コンストラクタでインスタンス変数の値を確定させる
+        if (amount < 0) {
+            // throw ~~
+         }
+        if (currency == null) {
+            // throw ~~
+        }
+
+        this.amount = amount;
+        this.currency = currency;
+    }
+
+    Money add(final Money other) {
+        // ④ メソッドの引数に型を指定する
+        if (!currency.equals(other.currency)) {
+            // thorw ~~
+        }
+
+        final int added = amount + other.amount;
+        return new Money(added, currency);
+    }
+}
+```
