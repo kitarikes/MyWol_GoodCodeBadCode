@@ -1,0 +1,77 @@
+my-blog/
+├─ .env                             # 環境変数（NEXT_PUBLIC_USE_DB, INITIAL_BUILD_COUNT…）
+├─ next.config.js                   # Next.js 設定
+├─ tailwind.config.js               # Tailwind 設定
+├─ tsconfig.json                    # TS パスエイリアス設定を追加
+├─ package.json
+│
+├─ prisma/
+│   ├─ migrations/                  # マイグレーション履歴
+│   ├─ schema.prisma
+│   └─ dev.db                       # SQLite（コミット管理）
+│
+├─ db/                              # DB スクリプト群
+│   ├─ seed.ts
+│   └─ migrate.ts
+│
+├─ src/
+│   ├─ core/                        # ← 共通ロジック集約
+│   │   ├─ errors/                  # ApiError, error-handling
+│   │   │   └─ ApiError.ts
+│   │   ├─ logging/                 # logger wrapper
+│   │   │   └─ logger.ts
+│   │   ├─ http/                    # API リクエスト・レスポンスユーティリティ
+│   │   │   └─ httpUtil.ts
+│   │   └─ mdx/                     # MDX pipeline 共通設定
+│   │       └─ mdxExtensions.ts
+│   │
+│   ├─ features/                    # ← 機能モジュール化
+│   │   ├─ posts/
+│   │   │   ├─ domain/
+│   │   │   │   ├─ Post.ts
+│   │   │   │   └─ PostCollection.ts
+│   │   │   ├─ repository/
+│   │   │   │   ├─ IPostRepository.ts
+│   │   │   │   ├─ FilePostRepo.ts
+│   │   │   │   └─ DbPostRepo.ts
+│   │   │   ├─ usecases/
+│   │   │   │   └─ GetPostUseCase.ts
+│   │   │   ├─ pipeline/
+│   │   │   │   └─ mdxExtensions.ts
+│   │   │   └─ components/
+│   │   │       ├─ MDXLayout.tsx
+│   │   │       └─ PostCard.tsx
+│   │   │
+│   │   └─ categories/
+│   │       ├─ domain/
+│   │       │   ├─ Category.ts
+│   │       │   └─ CategoryCollection.ts
+│   │       ├─ repository/
+│   │       │   ├─ ICategoryRepo.ts
+│   │       │   ├─ FileCategoryRepo.ts
+│   │       │   └─ DbCategoryRepo.ts
+│   │       ├─ usecases/
+│   │       │   └─ ListCategoriesUseCase.ts
+│   │       └─ components/
+│   │           └─ CategoryList.tsx
+│   │
+│   ├─ components/                  # グローバルUI（レイアウト等）
+│   │   └─ layout/
+│   │       ├─ Header.tsx
+│   │       ├─ Footer.tsx
+│   │       └─ GlobalLayout.tsx
+│   │
+│   └─ pages/                       # Next.js 自動ルーティング
+│       ├─ api/
+│       │   └─ revalidate.ts
+│       ├─ posts/
+│       │   └─ [slug].tsx
+│       ├─ categories/
+│       │   └─ [slug].tsx
+│       └─ index.tsx
+│
+├─ .github/
+│   └─ workflows/
+│       └─ ci.yml                  # ← CI/CD: ワークスペース＋マトリックス＋キャッシュ
+│
+└─ package.json
